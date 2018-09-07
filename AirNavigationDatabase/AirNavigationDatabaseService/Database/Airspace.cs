@@ -12,16 +12,20 @@ namespace AirNavigationDatabaseService.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_Tiles
+    public partial class Airspace
     {
-        public int C_id { get; set; }
+        public long id { get; set; }
         public string name { get; set; }
-        public string region { get; set; }
-        public string type { get; set; }
-        public string mbtileslink { get; set; }
-        public string xmllink { get; set; }
         public string version { get; set; }
-        public long startValidity { get; set; }
-        public long endValidity { get; set; }
+        public string category { get; set; }
+        public long airspace_id { get; set; }
+        public string country { get; set; }
+        public long altLimit_top { get; set; }
+        public string altLimit_top_unit { get; set; }
+        public string altLimit_top_ref { get; set; }
+        public long altLimit_bottom { get; set; }
+        public string altLimit_bottom_unit { get; set; }
+        public string altLimit_bottom_ref { get; set; }
+        public System.Data.Entity.Spatial.DbGeometry geometry { get; set; }
     }
 }

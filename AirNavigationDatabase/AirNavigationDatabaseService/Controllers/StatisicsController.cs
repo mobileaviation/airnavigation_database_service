@@ -10,15 +10,17 @@ using System.Web.Http;
 namespace AirNavigationDatabaseService.Controllers
 {
     [RoutePrefix("v1/airnavdb")]
-    public class TestController : ApiController
+    public class StatisicsController : ApiController
     {
-        [Route("test")]
+        [Route("Statistics")]
         [HttpGet]
-        public HttpResponseMessage GetLelystad()
+        public HttpResponseMessage GetCounts()
         {
-            AirportService airportService = new AirportService();
-            Airport lelystad = airportService.GetLelystad();
-            return Request.CreateResponse(HttpStatusCode.OK, lelystad);
+            StatistcsService statistcsService = new StatistcsService();
+            Statistics statistics = statistcsService.GetStatistics();
+
+
+            return Request.CreateResponse(HttpStatusCode.OK, statistics);
         }
     }
 }

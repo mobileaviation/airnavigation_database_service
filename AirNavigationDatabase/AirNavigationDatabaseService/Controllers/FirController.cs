@@ -10,15 +10,15 @@ using System.Web.Http;
 namespace AirNavigationDatabaseService.Controllers
 {
     [RoutePrefix("v1/airnavdb")]
-    public class TestController : ApiController
+    public class FirController : ApiController
     {
-        [Route("test")]
+        [Route("Firs/limit/{start}/{count}")]
         [HttpGet]
-        public HttpResponseMessage GetLelystad()
+        public HttpResponseMessage GetFirsByLimits(int start, int count)
         {
-            AirportService airportService = new AirportService();
-            Airport lelystad = airportService.GetLelystad();
-            return Request.CreateResponse(HttpStatusCode.OK, lelystad);
+            FirService firsService = new FirService();
+            List<Fir> firs = firsService.GetFirsByLimit(start, count);
+            return Request.CreateResponse(HttpStatusCode.OK, firs);
         }
     }
 }

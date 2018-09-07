@@ -12,14 +12,13 @@ namespace AirNavigationDatabaseService.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_Countries
+    public partial class Fir
     {
         public int C_id { get; set; }
         public int id { get; set; }
-        public string code { get; set; }
+        public string ident { get; set; }
         public string name { get; set; }
-        public string continent { get; set; }
-        public string wikipedia_link { get; set; }
-        public string keywords { get; set; }
+        public string position { get; set; }
+        public string polygon { get; set; }
     }
 }

@@ -14,7 +14,13 @@ namespace AirNavigationDatabaseService.Database
     
     public partial class Airport
     {
-        public int C_id { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Airport()
+        {
+            this.tbl_Frequencies = new HashSet<Frequency>();
+            this.tbl_Runways = new HashSet<Runway>();
+        }
+    
         public int id { get; set; }
         public string ident { get; set; }
         public string type { get; set; }
@@ -33,5 +39,10 @@ namespace AirNavigationDatabaseService.Database
         public string home_link { get; set; }
         public string wikipedia_link { get; set; }
         public string keywords { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Frequency> tbl_Frequencies { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Runway> tbl_Runways { get; set; }
     }
 }

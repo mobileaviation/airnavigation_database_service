@@ -12,7 +12,7 @@ namespace AirNavigationDatabaseService.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_Navaids
+    public partial class Navaid
     {
         public int C_id { get; set; }
         public int id { get; set; }

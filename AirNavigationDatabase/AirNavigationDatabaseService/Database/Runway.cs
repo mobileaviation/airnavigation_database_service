@@ -12,9 +12,8 @@ namespace AirNavigationDatabaseService.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_Runways
+    public partial class Runway
     {
-        public int C_id { get; set; }
         public int id { get; set; }
         public int airport_ref { get; set; }
         public string airport_ident { get; set; }
@@ -35,5 +34,7 @@ namespace AirNavigationDatabaseService.Database
         public int he_elevation_ft { get; set; }
         public double he_heading_degT { get; set; }
         public int he_displaced_threshold_ft { get; set; }
+    
+        public virtual Airport tbl_Airports { get; set; }
     }
 }

@@ -25,15 +25,16 @@ namespace AirNavigationDatabaseService.Database
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Country> tbl_Countries { get; set; }
+        public virtual DbSet<Fir> tbl_Firs { get; set; }
+        public virtual DbSet<Fix> tbl_Fixes { get; set; }
+        public virtual DbSet<Navaid> tbl_Navaids { get; set; }
+        public virtual DbSet<Region> tbl_Regions { get; set; }
+        public virtual DbSet<Tile> tbl_Tiles { get; set; }
+        public virtual DbSet<Airspace> tbl_Airspaces { get; set; }
+        public virtual DbSet<Link> tbl_Links1 { get; set; }
         public virtual DbSet<Airport> tbl_Airports { get; set; }
-        public virtual DbSet<tbl_Countries> tbl_Countries { get; set; }
-        public virtual DbSet<tbl_Firs> tbl_Firs { get; set; }
-        public virtual DbSet<tbl_Fixes> tbl_Fixes { get; set; }
-        public virtual DbSet<tbl_Frequencies> tbl_Frequencies { get; set; }
-        public virtual DbSet<tbl_Navaids> tbl_Navaids { get; set; }
-        public virtual DbSet<tbl_Regions> tbl_Regions { get; set; }
-        public virtual DbSet<tbl_Runways> tbl_Runways { get; set; }
-        public virtual DbSet<tbl_Tiles> tbl_Tiles { get; set; }
-        public virtual DbSet<tbl_links> tbl_links { get; set; }
+        public virtual DbSet<Frequency> tbl_Frequencies { get; set; }
+        public virtual DbSet<Runway> tbl_Runways { get; set; }
     }
 }

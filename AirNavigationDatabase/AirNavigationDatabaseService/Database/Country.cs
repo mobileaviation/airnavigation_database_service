@@ -12,17 +12,14 @@ namespace AirNavigationDatabaseService.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_links
+    public partial class Country
     {
-        public long PK_UID { get; set; }
-        public Nullable<long> id { get; set; }
-        public string country { get; set; }
-        public string countrycode { get; set; }
-        public string openaiplink { get; set; }
-        public string xsourlink { get; set; }
-        public Nullable<bool> enabled { get; set; }
-        public string weblink { get; set; }
-        public Nullable<bool> openaip_enabled { get; set; }
-        public Nullable<long> openaip_id_ { get; set; }
+        public int C_id { get; set; }
+        public int id { get; set; }
+        public string code { get; set; }
+        public string name { get; set; }
+        public string continent { get; set; }
+        public string wikipedia_link { get; set; }
+        public string keywords { get; set; }
     }
 }

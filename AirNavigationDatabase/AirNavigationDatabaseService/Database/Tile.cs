@@ -12,14 +12,16 @@ namespace AirNavigationDatabaseService.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_Frequencies
+    public partial class Tile
     {
         public int C_id { get; set; }
-        public int id { get; set; }
-        public int airport_ref { get; set; }
-        public string airport_ident { get; set; }
+        public string name { get; set; }
+        public string region { get; set; }
         public string type { get; set; }
-        public string description { get; set; }
-        public double frequency_mhz { get; set; }
+        public string mbtileslink { get; set; }
+        public string xmllink { get; set; }
+        public string version { get; set; }
+        public long startValidity { get; set; }
+        public long endValidity { get; set; }
     }
 }

@@ -12,11 +12,16 @@ namespace AirNavigationDatabaseService.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_Fixes
+    public partial class Region
     {
         public int C_id { get; set; }
-        public string ident { get; set; }
-        public double latitude_deg { get; set; }
-        public double longitude_deg { get; set; }
+        public int id { get; set; }
+        public string code { get; set; }
+        public string local_code { get; set; }
+        public string name { get; set; }
+        public string continent { get; set; }
+        public string iso_country { get; set; }
+        public string wikipedia_link { get; set; }
+        public string keywords { get; set; }
     }
 }

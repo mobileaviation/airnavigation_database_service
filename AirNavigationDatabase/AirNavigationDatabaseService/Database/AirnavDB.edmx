@@ -4,12 +4,11 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="airnavdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="airnavdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tbl_Airports">
           <Key>
-            <PropertyRef Name="_id" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="ident" Type="nvarchar" MaxLength="10" />
           <Property Name="type" Type="nvarchar(max)" />
@@ -28,6 +27,24 @@
           <Property Name="home_link" Type="nvarchar(max)" />
           <Property Name="wikipedia_link" Type="nvarchar(max)" />
           <Property Name="keywords" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tbl_Airspaces">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" />
+          <Property Name="version" Type="nvarchar(max)" />
+          <Property Name="category" Type="nvarchar(max)" />
+          <Property Name="airspace_id" Type="bigint" Nullable="false" />
+          <Property Name="country" Type="nvarchar(max)" />
+          <Property Name="altLimit_top" Type="bigint" Nullable="false" />
+          <Property Name="altLimit_top_unit" Type="nvarchar(max)" />
+          <Property Name="altLimit_top_ref" Type="nvarchar(max)" />
+          <Property Name="altLimit_bottom" Type="bigint" Nullable="false" />
+          <Property Name="altLimit_bottom_unit" Type="nvarchar(max)" />
+          <Property Name="altLimit_bottom_ref" Type="nvarchar(max)" />
+          <Property Name="geometry" Type="geometry" />
         </EntityType>
         <EntityType Name="tbl_Countries">
           <Key>
@@ -63,9 +80,8 @@
         </EntityType>
         <EntityType Name="tbl_Frequencies">
           <Key>
-            <PropertyRef Name="_id" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="airport_ref" Type="int" Nullable="false" />
           <Property Name="airport_ident" Type="nvarchar(max)" />
@@ -73,22 +89,19 @@
           <Property Name="description" Type="nvarchar(max)" />
           <Property Name="frequency_mhz" Type="float" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'airnavdb.dbo.tbl_links' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="tbl_links">
+        <EntityType Name="tbl_Links">
           <Key>
-            <PropertyRef Name="PK_UID" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="PK_UID" Type="bigint" Nullable="false" />
-          <Property Name="id" Type="bigint" />
-          <Property Name="country" Type="varchar" MaxLength="32" />
-          <Property Name="countrycode" Type="varchar" MaxLength="2" />
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="country" Type="nvarchar" MaxLength="32" />
+          <Property Name="countrycode" Type="nvarchar" MaxLength="2" />
           <Property Name="openaiplink" Type="nvarchar(max)" />
           <Property Name="xsourlink" Type="nvarchar(max)" />
-          <Property Name="enabled" Type="bit" />
+          <Property Name="enabled" Type="bit" Nullable="false" />
           <Property Name="weblink" Type="nvarchar(max)" />
-          <Property Name="openaip_enabled" Type="bit" />
-          <Property Name="openaip_id_" Type="bigint" />
+          <Property Name="openaip_enabled" Type="bit" Nullable="false" />
+          <Property Name="openaip_id" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="tbl_Navaids">
           <Key>
@@ -133,9 +146,8 @@ warning 6002: The table/view 'airnavdb.dbo.tbl_links' does not have a primary ke
         </EntityType>
         <EntityType Name="tbl_Runways">
           <Key>
-            <PropertyRef Name="_id" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="airport_ref" Type="int" Nullable="false" />
           <Property Name="airport_ident" Type="nvarchar(max)" />
@@ -171,61 +183,60 @@ warning 6002: The table/view 'airnavdb.dbo.tbl_links' does not have a primary ke
           <Property Name="startValidity" Type="bigint" Nullable="false" />
           <Property Name="endValidity" Type="bigint" Nullable="false" />
         </EntityType>
+        <Association Name="FK_dbo_tbl_Frequencies_dbo_tbl_Airports_airport_ref">
+          <End Role="tbl_Airports" Type="Self.tbl_Airports" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbl_Frequencies" Type="Self.tbl_Frequencies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Airports">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tbl_Frequencies">
+              <PropertyRef Name="airport_ref" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbl_Runways_dbo_tbl_Airports_airport_ref">
+          <End Role="tbl_Airports" Type="Self.tbl_Airports" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbl_Runways" Type="Self.tbl_Runways" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Airports">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tbl_Runways">
+              <PropertyRef Name="airport_ref" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="airnavdbModelStoreContainer">
           <EntitySet Name="tbl_Airports" EntityType="Self.tbl_Airports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Airspaces" EntityType="Self.tbl_Airspaces" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Countries" EntityType="Self.tbl_Countries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Firs" EntityType="Self.tbl_Firs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Fixes" EntityType="Self.tbl_Fixes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Frequencies" EntityType="Self.tbl_Frequencies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Links" EntityType="Self.tbl_Links" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Navaids" EntityType="Self.tbl_Navaids" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Regions" EntityType="Self.tbl_Regions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Runways" EntityType="Self.tbl_Runways" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Tiles" EntityType="Self.tbl_Tiles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tbl_links" EntityType="Self.tbl_links" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tbl_links].[PK_UID] AS [PK_UID], 
-    [tbl_links].[id] AS [id], 
-    [tbl_links].[country] AS [country], 
-    [tbl_links].[countrycode] AS [countrycode], 
-    [tbl_links].[openaiplink] AS [openaiplink], 
-    [tbl_links].[xsourlink] AS [xsourlink], 
-    [tbl_links].[enabled] AS [enabled], 
-    [tbl_links].[weblink] AS [weblink], 
-    [tbl_links].[openaip_enabled] AS [openaip_enabled], 
-    [tbl_links].[openaip_id_] AS [openaip_id_]
-    FROM [dbo].[tbl_links] AS [tbl_links]</DefiningQuery>
-          </EntitySet>
+          <AssociationSet Name="FK_dbo_tbl_Frequencies_dbo_tbl_Airports_airport_ref" Association="Self.FK_dbo_tbl_Frequencies_dbo_tbl_Airports_airport_ref">
+            <End Role="tbl_Airports" EntitySet="tbl_Airports" />
+            <End Role="tbl_Frequencies" EntitySet="tbl_Frequencies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbl_Runways_dbo_tbl_Airports_airport_ref" Association="Self.FK_dbo_tbl_Runways_dbo_tbl_Airports_airport_ref">
+            <End Role="tbl_Airports" EntitySet="tbl_Airports" />
+            <End Role="tbl_Runways" EntitySet="tbl_Runways" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="airnavdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Airport">
-          <Key>
-            <PropertyRef Name="C_id" />
-          </Key>
-          <Property Name="C_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="ident" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="latitude_deg" Type="Double" Nullable="false" />
-          <Property Name="longitude_deg" Type="Double" Nullable="false" />
-          <Property Name="elevation_ft" Type="Double" Nullable="false" />
-          <Property Name="continent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="iso_country" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="iso_region" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="municipality" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="scheduled_service" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="gps_code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="iata_code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="local_code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="home_link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="wikipedia_link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="keywords" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="tbl_Countries">
+        <EntityType Name="Country">
           <Key>
             <PropertyRef Name="C_id" />
           </Key>
@@ -237,7 +248,7 @@ warning 6002: The table/view 'airnavdb.dbo.tbl_links' does not have a primary ke
           <Property Name="wikipedia_link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="keywords" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="tbl_Firs">
+        <EntityType Name="Fir">
           <Key>
             <PropertyRef Name="C_id" />
           </Key>
@@ -248,7 +259,7 @@ warning 6002: The table/view 'airnavdb.dbo.tbl_links' does not have a primary ke
           <Property Name="position" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="polygon" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="tbl_Fixes">
+        <EntityType Name="Fix">
           <Key>
             <PropertyRef Name="C_id" />
           </Key>
@@ -257,19 +268,7 @@ warning 6002: The table/view 'airnavdb.dbo.tbl_links' does not have a primary ke
           <Property Name="latitude_deg" Type="Double" Nullable="false" />
           <Property Name="longitude_deg" Type="Double" Nullable="false" />
         </EntityType>
-        <EntityType Name="tbl_Frequencies">
-          <Key>
-            <PropertyRef Name="C_id" />
-          </Key>
-          <Property Name="C_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="airport_ref" Type="Int32" Nullable="false" />
-          <Property Name="airport_ident" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="frequency_mhz" Type="Double" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tbl_Navaids">
+        <EntityType Name="Navaid">
           <Key>
             <PropertyRef Name="C_id" />
           </Key>
@@ -296,7 +295,7 @@ warning 6002: The table/view 'airnavdb.dbo.tbl_links' does not have a primary ke
           <Property Name="associated_airport" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="associated_airport_id" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="tbl_Regions">
+        <EntityType Name="Region">
           <Key>
             <PropertyRef Name="C_id" />
           </Key>
@@ -310,11 +309,114 @@ warning 6002: The table/view 'airnavdb.dbo.tbl_links' does not have a primary ke
           <Property Name="wikipedia_link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="keywords" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="tbl_Runways">
+        <EntityType Name="Tile">
           <Key>
             <PropertyRef Name="C_id" />
           </Key>
           <Property Name="C_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="region" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="mbtileslink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="xmllink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="version" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="startValidity" Type="Int64" Nullable="false" />
+          <Property Name="endValidity" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="airnavdbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_Countries" EntityType="airnavdbModel.Country" />
+          <EntitySet Name="tbl_Firs" EntityType="airnavdbModel.Fir" />
+          <EntitySet Name="tbl_Fixes" EntityType="airnavdbModel.Fix" />
+          <EntitySet Name="tbl_Navaids" EntityType="airnavdbModel.Navaid" />
+          <EntitySet Name="tbl_Regions" EntityType="airnavdbModel.Region" />
+          <EntitySet Name="tbl_Tiles" EntityType="airnavdbModel.Tile" />
+          <EntitySet Name="tbl_Airspaces" EntityType="airnavdbModel.Airspace" />
+          <EntitySet Name="tbl_Links1" EntityType="airnavdbModel.Link" />
+          <EntitySet Name="tbl_Airports" EntityType="airnavdbModel.Airport" />
+          <EntitySet Name="tbl_Frequencies" EntityType="airnavdbModel.Frequency" />
+          <EntitySet Name="tbl_Runways" EntityType="airnavdbModel.Runway" />
+          <AssociationSet Name="FK_dbo_tbl_Frequencies_dbo_tbl_Airports_airport_ref" Association="airnavdbModel.FK_dbo_tbl_Frequencies_dbo_tbl_Airports_airport_ref">
+            <End Role="tbl_Airports" EntitySet="tbl_Airports" />
+            <End Role="tbl_Frequencies" EntitySet="tbl_Frequencies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbl_Runways_dbo_tbl_Airports_airport_ref" Association="airnavdbModel.FK_dbo_tbl_Runways_dbo_tbl_Airports_airport_ref">
+            <End Role="tbl_Airports" EntitySet="tbl_Airports" />
+            <End Role="tbl_Runways" EntitySet="tbl_Runways" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Airspace">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="version" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="category" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="airspace_id" Type="Int64" Nullable="false" />
+          <Property Name="country" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="altLimit_top" Type="Int64" Nullable="false" />
+          <Property Name="altLimit_top_unit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="altLimit_top_ref" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="altLimit_bottom" Type="Int64" Nullable="false" />
+          <Property Name="altLimit_bottom_unit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="altLimit_bottom_ref" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="geometry" Type="Geometry" />
+        </EntityType>
+        <EntityType Name="Link">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="country" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="countrycode" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="openaiplink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="xsourlink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="enabled" Type="Boolean" Nullable="false" />
+          <Property Name="weblink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="openaip_enabled" Type="Boolean" Nullable="false" />
+          <Property Name="openaip_id" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Airport">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="ident" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="latitude_deg" Type="Double" Nullable="false" />
+          <Property Name="longitude_deg" Type="Double" Nullable="false" />
+          <Property Name="elevation_ft" Type="Double" Nullable="false" />
+          <Property Name="continent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="iso_country" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="iso_region" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="municipality" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="scheduled_service" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="gps_code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="iata_code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="local_code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="home_link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="wikipedia_link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="keywords" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_Frequencies" Relationship="airnavdbModel.FK_dbo_tbl_Frequencies_dbo_tbl_Airports_airport_ref" FromRole="tbl_Airports" ToRole="tbl_Frequencies" />
+          <NavigationProperty Name="tbl_Runways" Relationship="airnavdbModel.FK_dbo_tbl_Runways_dbo_tbl_Airports_airport_ref" FromRole="tbl_Airports" ToRole="tbl_Runways" />
+        </EntityType>
+        <EntityType Name="Frequency">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="airport_ref" Type="Int32" Nullable="false" />
+          <Property Name="airport_ident" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="frequency_mhz" Type="Double" Nullable="false" />
+          <NavigationProperty Name="tbl_Airports" Relationship="airnavdbModel.FK_dbo_tbl_Frequencies_dbo_tbl_Airports_airport_ref" FromRole="tbl_Frequencies" ToRole="tbl_Airports" />
+        </EntityType>
+        <EntityType Name="Runway">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="airport_ref" Type="Int32" Nullable="false" />
           <Property Name="airport_ident" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -335,81 +437,44 @@ warning 6002: The table/view 'airnavdb.dbo.tbl_links' does not have a primary ke
           <Property Name="he_elevation_ft" Type="Int32" Nullable="false" />
           <Property Name="he_heading_degT" Type="Double" Nullable="false" />
           <Property Name="he_displaced_threshold_ft" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tbl_Airports" Relationship="airnavdbModel.FK_dbo_tbl_Runways_dbo_tbl_Airports_airport_ref" FromRole="tbl_Runways" ToRole="tbl_Airports" />
         </EntityType>
-        <EntityType Name="tbl_Tiles">
-          <Key>
-            <PropertyRef Name="C_id" />
-          </Key>
-          <Property Name="C_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="region" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="mbtileslink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="xmllink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="version" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="startValidity" Type="Int64" Nullable="false" />
-          <Property Name="endValidity" Type="Int64" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tbl_links">
-          <Key>
-            <PropertyRef Name="PK_UID" />
-          </Key>
-          <Property Name="PK_UID" Type="Int64" Nullable="false" />
-          <Property Name="id" Type="Int64" />
-          <Property Name="country" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="countrycode" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="openaiplink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="xsourlink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="enabled" Type="Boolean" />
-          <Property Name="weblink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="openaip_enabled" Type="Boolean" />
-          <Property Name="openaip_id_" Type="Int64" />
-        </EntityType>
-        <EntityContainer Name="airnavdbEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="tbl_Airports" EntityType="airnavdbModel.Airport" />
-          <EntitySet Name="tbl_Countries" EntityType="Self.tbl_Countries" />
-          <EntitySet Name="tbl_Firs" EntityType="Self.tbl_Firs" />
-          <EntitySet Name="tbl_Fixes" EntityType="Self.tbl_Fixes" />
-          <EntitySet Name="tbl_Frequencies" EntityType="Self.tbl_Frequencies" />
-          <EntitySet Name="tbl_Navaids" EntityType="Self.tbl_Navaids" />
-          <EntitySet Name="tbl_Regions" EntityType="Self.tbl_Regions" />
-          <EntitySet Name="tbl_Runways" EntityType="Self.tbl_Runways" />
-          <EntitySet Name="tbl_Tiles" EntityType="Self.tbl_Tiles" />
-          <EntitySet Name="tbl_links" EntityType="Self.tbl_links" />
-        </EntityContainer>
+        <Association Name="FK_dbo_tbl_Frequencies_dbo_tbl_Airports_airport_ref">
+          <End Type="airnavdbModel.Airport" Role="tbl_Airports" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="airnavdbModel.Frequency" Role="tbl_Frequencies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Airports">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tbl_Frequencies">
+              <PropertyRef Name="airport_ref" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbl_Runways_dbo_tbl_Airports_airport_ref">
+          <End Type="airnavdbModel.Airport" Role="tbl_Airports" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="airnavdbModel.Runway" Role="tbl_Runways" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Airports">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tbl_Runways">
+              <PropertyRef Name="airport_ref" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="airnavdbModelStoreContainer" CdmEntityContainer="airnavdbEntities">
-          <EntitySetMapping Name="tbl_Airports">
-            <EntityTypeMapping TypeName="airnavdbModel.Airport">
-              <MappingFragment StoreEntitySet="tbl_Airports">
-                <ScalarProperty Name="C_id" ColumnName="_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="ident" ColumnName="ident" />
-                <ScalarProperty Name="type" ColumnName="type" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="latitude_deg" ColumnName="latitude_deg" />
-                <ScalarProperty Name="longitude_deg" ColumnName="longitude_deg" />
-                <ScalarProperty Name="elevation_ft" ColumnName="elevation_ft" />
-                <ScalarProperty Name="continent" ColumnName="continent" />
-                <ScalarProperty Name="iso_country" ColumnName="iso_country" />
-                <ScalarProperty Name="iso_region" ColumnName="iso_region" />
-                <ScalarProperty Name="municipality" ColumnName="municipality" />
-                <ScalarProperty Name="scheduled_service" ColumnName="scheduled_service" />
-                <ScalarProperty Name="gps_code" ColumnName="gps_code" />
-                <ScalarProperty Name="iata_code" ColumnName="iata_code" />
-                <ScalarProperty Name="local_code" ColumnName="local_code" />
-                <ScalarProperty Name="home_link" ColumnName="home_link" />
-                <ScalarProperty Name="wikipedia_link" ColumnName="wikipedia_link" />
-                <ScalarProperty Name="keywords" ColumnName="keywords" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tbl_Countries">
-            <EntityTypeMapping TypeName="airnavdbModel.tbl_Countries">
+            <EntityTypeMapping TypeName="airnavdbModel.Country">
               <MappingFragment StoreEntitySet="tbl_Countries">
                 <ScalarProperty Name="C_id" ColumnName="_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -422,7 +487,7 @@ warning 6002: The table/view 'airnavdb.dbo.tbl_links' does not have a primary ke
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_Firs">
-            <EntityTypeMapping TypeName="airnavdbModel.tbl_Firs">
+            <EntityTypeMapping TypeName="airnavdbModel.Fir">
               <MappingFragment StoreEntitySet="tbl_Firs">
                 <ScalarProperty Name="C_id" ColumnName="_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -434,7 +499,7 @@ warning 6002: The table/view 'airnavdb.dbo.tbl_links' does not have a primary ke
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_Fixes">
-            <EntityTypeMapping TypeName="airnavdbModel.tbl_Fixes">
+            <EntityTypeMapping TypeName="airnavdbModel.Fix">
               <MappingFragment StoreEntitySet="tbl_Fixes">
                 <ScalarProperty Name="C_id" ColumnName="_id" />
                 <ScalarProperty Name="ident" ColumnName="ident" />
@@ -443,21 +508,8 @@ warning 6002: The table/view 'airnavdb.dbo.tbl_links' does not have a primary ke
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tbl_Frequencies">
-            <EntityTypeMapping TypeName="airnavdbModel.tbl_Frequencies">
-              <MappingFragment StoreEntitySet="tbl_Frequencies">
-                <ScalarProperty Name="C_id" ColumnName="_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="airport_ref" ColumnName="airport_ref" />
-                <ScalarProperty Name="airport_ident" ColumnName="airport_ident" />
-                <ScalarProperty Name="type" ColumnName="type" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="frequency_mhz" ColumnName="frequency_mhz" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tbl_Navaids">
-            <EntityTypeMapping TypeName="airnavdbModel.tbl_Navaids">
+            <EntityTypeMapping TypeName="airnavdbModel.Navaid">
               <MappingFragment StoreEntitySet="tbl_Navaids">
                 <ScalarProperty Name="C_id" ColumnName="_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -485,7 +537,7 @@ warning 6002: The table/view 'airnavdb.dbo.tbl_links' does not have a primary ke
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_Regions">
-            <EntityTypeMapping TypeName="airnavdbModel.tbl_Regions">
+            <EntityTypeMapping TypeName="airnavdbModel.Region">
               <MappingFragment StoreEntitySet="tbl_Regions">
                 <ScalarProperty Name="C_id" ColumnName="_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -499,35 +551,8 @@ warning 6002: The table/view 'airnavdb.dbo.tbl_links' does not have a primary ke
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tbl_Runways">
-            <EntityTypeMapping TypeName="airnavdbModel.tbl_Runways">
-              <MappingFragment StoreEntitySet="tbl_Runways">
-                <ScalarProperty Name="C_id" ColumnName="_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="airport_ref" ColumnName="airport_ref" />
-                <ScalarProperty Name="airport_ident" ColumnName="airport_ident" />
-                <ScalarProperty Name="length_ft" ColumnName="length_ft" />
-                <ScalarProperty Name="width_ft" ColumnName="width_ft" />
-                <ScalarProperty Name="lighted" ColumnName="lighted" />
-                <ScalarProperty Name="closed" ColumnName="closed" />
-                <ScalarProperty Name="surface" ColumnName="surface" />
-                <ScalarProperty Name="le_ident" ColumnName="le_ident" />
-                <ScalarProperty Name="le_latitude_deg" ColumnName="le_latitude_deg" />
-                <ScalarProperty Name="le_longitude_deg" ColumnName="le_longitude_deg" />
-                <ScalarProperty Name="le_elevation_ft" ColumnName="le_elevation_ft" />
-                <ScalarProperty Name="le_heading_degT" ColumnName="le_heading_degT" />
-                <ScalarProperty Name="le_displaced_threshold_ft" ColumnName="le_displaced_threshold_ft" />
-                <ScalarProperty Name="he_ident" ColumnName="he_ident" />
-                <ScalarProperty Name="he_latitude_deg" ColumnName="he_latitude_deg" />
-                <ScalarProperty Name="he_longitude_deg" ColumnName="he_longitude_deg" />
-                <ScalarProperty Name="he_elevation_ft" ColumnName="he_elevation_ft" />
-                <ScalarProperty Name="he_heading_degT" ColumnName="he_heading_degT" />
-                <ScalarProperty Name="he_displaced_threshold_ft" ColumnName="he_displaced_threshold_ft" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tbl_Tiles">
-            <EntityTypeMapping TypeName="airnavdbModel.tbl_Tiles">
+            <EntityTypeMapping TypeName="airnavdbModel.Tile">
               <MappingFragment StoreEntitySet="tbl_Tiles">
                 <ScalarProperty Name="C_id" ColumnName="_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -541,19 +566,99 @@ warning 6002: The table/view 'airnavdb.dbo.tbl_links' does not have a primary ke
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tbl_links">
-            <EntityTypeMapping TypeName="airnavdbModel.tbl_links">
-              <MappingFragment StoreEntitySet="tbl_links">
-                <ScalarProperty Name="PK_UID" ColumnName="PK_UID" />
-                <ScalarProperty Name="id" ColumnName="id" />
+          <EntitySetMapping Name="tbl_Airspaces">
+            <EntityTypeMapping TypeName="airnavdbModel.Airspace">
+              <MappingFragment StoreEntitySet="tbl_Airspaces">
+                <ScalarProperty Name="geometry" ColumnName="geometry" />
+                <ScalarProperty Name="altLimit_bottom_ref" ColumnName="altLimit_bottom_ref" />
+                <ScalarProperty Name="altLimit_bottom_unit" ColumnName="altLimit_bottom_unit" />
+                <ScalarProperty Name="altLimit_bottom" ColumnName="altLimit_bottom" />
+                <ScalarProperty Name="altLimit_top_ref" ColumnName="altLimit_top_ref" />
+                <ScalarProperty Name="altLimit_top_unit" ColumnName="altLimit_top_unit" />
+                <ScalarProperty Name="altLimit_top" ColumnName="altLimit_top" />
                 <ScalarProperty Name="country" ColumnName="country" />
-                <ScalarProperty Name="countrycode" ColumnName="countrycode" />
-                <ScalarProperty Name="openaiplink" ColumnName="openaiplink" />
-                <ScalarProperty Name="xsourlink" ColumnName="xsourlink" />
-                <ScalarProperty Name="enabled" ColumnName="enabled" />
-                <ScalarProperty Name="weblink" ColumnName="weblink" />
+                <ScalarProperty Name="airspace_id" ColumnName="airspace_id" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Links1">
+            <EntityTypeMapping TypeName="airnavdbModel.Link">
+              <MappingFragment StoreEntitySet="tbl_Links">
+                <ScalarProperty Name="openaip_id" ColumnName="openaip_id" />
                 <ScalarProperty Name="openaip_enabled" ColumnName="openaip_enabled" />
-                <ScalarProperty Name="openaip_id_" ColumnName="openaip_id_" />
+                <ScalarProperty Name="weblink" ColumnName="weblink" />
+                <ScalarProperty Name="enabled" ColumnName="enabled" />
+                <ScalarProperty Name="xsourlink" ColumnName="xsourlink" />
+                <ScalarProperty Name="openaiplink" ColumnName="openaiplink" />
+                <ScalarProperty Name="countrycode" ColumnName="countrycode" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Airports">
+            <EntityTypeMapping TypeName="airnavdbModel.Airport">
+              <MappingFragment StoreEntitySet="tbl_Airports">
+                <ScalarProperty Name="keywords" ColumnName="keywords" />
+                <ScalarProperty Name="wikipedia_link" ColumnName="wikipedia_link" />
+                <ScalarProperty Name="home_link" ColumnName="home_link" />
+                <ScalarProperty Name="local_code" ColumnName="local_code" />
+                <ScalarProperty Name="iata_code" ColumnName="iata_code" />
+                <ScalarProperty Name="gps_code" ColumnName="gps_code" />
+                <ScalarProperty Name="scheduled_service" ColumnName="scheduled_service" />
+                <ScalarProperty Name="municipality" ColumnName="municipality" />
+                <ScalarProperty Name="iso_region" ColumnName="iso_region" />
+                <ScalarProperty Name="iso_country" ColumnName="iso_country" />
+                <ScalarProperty Name="continent" ColumnName="continent" />
+                <ScalarProperty Name="elevation_ft" ColumnName="elevation_ft" />
+                <ScalarProperty Name="longitude_deg" ColumnName="longitude_deg" />
+                <ScalarProperty Name="latitude_deg" ColumnName="latitude_deg" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="ident" ColumnName="ident" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Frequencies">
+            <EntityTypeMapping TypeName="airnavdbModel.Frequency">
+              <MappingFragment StoreEntitySet="tbl_Frequencies">
+                <ScalarProperty Name="frequency_mhz" ColumnName="frequency_mhz" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="airport_ident" ColumnName="airport_ident" />
+                <ScalarProperty Name="airport_ref" ColumnName="airport_ref" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Runways">
+            <EntityTypeMapping TypeName="airnavdbModel.Runway">
+              <MappingFragment StoreEntitySet="tbl_Runways">
+                <ScalarProperty Name="he_displaced_threshold_ft" ColumnName="he_displaced_threshold_ft" />
+                <ScalarProperty Name="he_heading_degT" ColumnName="he_heading_degT" />
+                <ScalarProperty Name="he_elevation_ft" ColumnName="he_elevation_ft" />
+                <ScalarProperty Name="he_longitude_deg" ColumnName="he_longitude_deg" />
+                <ScalarProperty Name="he_latitude_deg" ColumnName="he_latitude_deg" />
+                <ScalarProperty Name="he_ident" ColumnName="he_ident" />
+                <ScalarProperty Name="le_displaced_threshold_ft" ColumnName="le_displaced_threshold_ft" />
+                <ScalarProperty Name="le_heading_degT" ColumnName="le_heading_degT" />
+                <ScalarProperty Name="le_elevation_ft" ColumnName="le_elevation_ft" />
+                <ScalarProperty Name="le_longitude_deg" ColumnName="le_longitude_deg" />
+                <ScalarProperty Name="le_latitude_deg" ColumnName="le_latitude_deg" />
+                <ScalarProperty Name="le_ident" ColumnName="le_ident" />
+                <ScalarProperty Name="surface" ColumnName="surface" />
+                <ScalarProperty Name="closed" ColumnName="closed" />
+                <ScalarProperty Name="lighted" ColumnName="lighted" />
+                <ScalarProperty Name="width_ft" ColumnName="width_ft" />
+                <ScalarProperty Name="length_ft" ColumnName="length_ft" />
+                <ScalarProperty Name="airport_ident" ColumnName="airport_ident" />
+                <ScalarProperty Name="airport_ref" ColumnName="airport_ref" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
