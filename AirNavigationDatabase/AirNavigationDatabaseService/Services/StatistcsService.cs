@@ -27,7 +27,7 @@ namespace AirNavigationDatabaseService.Services
             s.FixesCount = (from a in db.tbl_Fixes select a).Count();
             s.FirsCount = (from a in db.tbl_Firs select a).Count();
             s.CountriesCount = (from a in db.tbl_Countries select a).Count();
-            s.AirspacesCount = 15976;
+            s.AirspacesCount = (from a in db.tbl_Airspaces select a).Count();
             s.Version = Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd"));
 
             return s;

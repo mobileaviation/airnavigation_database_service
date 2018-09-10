@@ -7,15 +7,15 @@
       <Diagram DiagramId="9755f240979a4d4a8ca158881eff10cd" Name="Diagram1">
         <EntityTypeShape EntityType="airnavdbModel.Country" Width="1.5" PointX="4.5" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="airnavdbModel.Fir" Width="1.5" PointX="10.875" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="airnavdbModel.Fix" Width="1.5" PointX="13.125" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="airnavdbModel.Fix" Width="1.5" PointX="8.875" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="airnavdbModel.Navaid" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="airnavdbModel.Region" Width="1.5" PointX="4.5" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="airnavdbModel.Tile" Width="1.5" PointX="12.875" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="airnavdbModel.Airspace" Width="1.5" PointX="0.625" PointY="4.75" />
-        <EntityTypeShape EntityType="airnavdbModel.Link" Width="1.5" PointX="0.75" PointY="9.75" />
-        <EntityTypeShape EntityType="airnavdbModel.Airport" Width="1.5" PointX="2.5" PointY="5.875" />
+        <EntityTypeShape EntityType="airnavdbModel.Tile" Width="1.5" PointX="9.125" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="airnavdbModel.Airspace" Width="1.5" PointX="0.5" PointY="0.75" />
+        <EntityTypeShape EntityType="airnavdbModel.Link" Width="1.5" PointX="2.625" PointY="0.875" />
+        <EntityTypeShape EntityType="airnavdbModel.Airport" Width="1.5" PointX="2.5" PointY="4.375" />
         <EntityTypeShape EntityType="airnavdbModel.Frequency" Width="1.5" PointX="5.125" PointY="6.25" />
-        <EntityTypeShape EntityType="airnavdbModel.Runway" Width="1.5" PointX="5.625" PointY="8.75" />
+        <EntityTypeShape EntityType="airnavdbModel.Runway" Width="1.5" PointX="0.5" PointY="6.5" />
         <AssociationConnector Association="airnavdbModel.FK_dbo_tbl_Frequencies_dbo_tbl_Airports_airport_ref" />
         <AssociationConnector Association="airnavdbModel.FK_dbo_tbl_Runways_dbo_tbl_Airports_airport_ref" />
       </Diagram>
