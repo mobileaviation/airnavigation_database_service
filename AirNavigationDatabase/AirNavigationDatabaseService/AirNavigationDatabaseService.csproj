@@ -95,15 +95,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Database\AirnavDB.Context.tt">
+    <Content Include="Database\AirnavDB1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AirnavDB.Context.cs</LastGenOutput>
       <DependentUpon>AirnavDB.edmx</DependentUpon>
+      <LastGenOutput>AirnavDB1.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Database\AirnavDB.tt">
+    <Content Include="Database\AirnavDB1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>AirnavDB.edmx</DependentUpon>
-      <LastGenOutput>AirnavDB.cs</LastGenOutput>
+      <LastGenOutput>AirnavDB1.cs</LastGenOutput>
     </Content>
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
@@ -120,15 +120,21 @@
     <Compile Include="Controllers\StatisicsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TileController.cs" />
-    <Compile Include="Database\AirnavDB.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AirnavDB.Context.tt</DependentUpon>
+    <Compile Include="Database\ActiveDay.cs">
+      <DependentUpon>AirnavDB1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\AirnavDB.cs">
+    <Compile Include="Database\ActivePeriod.cs">
+      <DependentUpon>AirnavDB1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\AirnavDB1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AirnavDB.tt</DependentUpon>
+      <DependentUpon>AirnavDB1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\AirnavDB1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AirnavDB1.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\AirnavDB.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -136,43 +142,49 @@
       <DependentUpon>AirnavDB.edmx</DependentUpon>
     </Compile>
     <Compile Include="Database\Airport.cs">
-      <DependentUpon>AirnavDB.tt</DependentUpon>
+      <DependentUpon>AirnavDB1.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Airspace.cs">
-      <DependentUpon>AirnavDB.tt</DependentUpon>
+      <DependentUpon>AirnavDB1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\ATCStation.cs">
+      <DependentUpon>AirnavDB1.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Country.cs">
-      <DependentUpon>AirnavDB.tt</DependentUpon>
+      <DependentUpon>AirnavDB1.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Fir.cs">
-      <DependentUpon>AirnavDB.tt</DependentUpon>
+      <DependentUpon>AirnavDB1.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Fix.cs">
-      <DependentUpon>AirnavDB.tt</DependentUpon>
+      <DependentUpon>AirnavDB1.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Frequency.cs">
-      <DependentUpon>AirnavDB.tt</DependentUpon>
+      <DependentUpon>AirnavDB1.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Link.cs">
-      <DependentUpon>AirnavDB.tt</DependentUpon>
+      <DependentUpon>AirnavDB1.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Navaid.cs">
-      <DependentUpon>AirnavDB.tt</DependentUpon>
+      <DependentUpon>AirnavDB1.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Region.cs">
-      <DependentUpon>AirnavDB.tt</DependentUpon>
+      <DependentUpon>AirnavDB1.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Runway.cs">
-      <DependentUpon>AirnavDB.tt</DependentUpon>
+      <DependentUpon>AirnavDB1.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Tile.cs">
-      <DependentUpon>AirnavDB.tt</DependentUpon>
+      <DependentUpon>AirnavDB1.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ActiveDay.cs" />
+    <Compile Include="Models\ActivePeriod.cs" />
     <Compile Include="Models\Airport.cs" />
     <Compile Include="Models\Airspace.cs" />
+    <Compile Include="Models\ATCStation.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\EmpModel.cs" />
     <Compile Include="Models\Fir.cs" />

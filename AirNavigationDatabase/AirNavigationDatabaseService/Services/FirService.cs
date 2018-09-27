@@ -15,11 +15,11 @@ namespace AirNavigationDatabaseService.Services
 
             fir_mapper = new Mapper(fir_mapper_cfg);
 
-            db = new Database.airnavdbEntities();
+            db = new Database.airnavdb_2Entities();
         }
 
         private IMapper fir_mapper;
-        private Database.airnavdbEntities db;
+        private Database.airnavdb_2Entities db;
 
         public List<Fir> GetFirsByLimit(int start, int count)
         {

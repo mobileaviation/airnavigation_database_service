@@ -10,10 +10,10 @@ namespace AirNavigationDatabaseService.Services
     {
         public StatistcsService()
         {
-            db = new Database.airnavdbEntities();
+            db = new Database.airnavdb_2Entities();
         }
 
-        private Database.airnavdbEntities db;
+        private Database.airnavdb_2Entities db;
 
         public Statistics GetStatistics()
         {

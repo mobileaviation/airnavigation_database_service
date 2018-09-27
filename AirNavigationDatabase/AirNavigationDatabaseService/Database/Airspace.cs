@@ -14,6 +14,14 @@ namespace AirNavigationDatabaseService.Database
     
     public partial class Airspace
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Airspace()
+        {
+            this.tbl_ActiveDays = new HashSet<ActiveDay>();
+            this.tbl_ActivePeriods = new HashSet<ActivePeriod>();
+            this.tbl_ATCStations = new HashSet<ATCStation>();
+        }
+    
         public long id { get; set; }
         public string name { get; set; }
         public string version { get; set; }
@@ -26,6 +34,14 @@ namespace AirNavigationDatabaseService.Database
         public long altLimit_bottom { get; set; }
         public string altLimit_bottom_unit { get; set; }
         public string altLimit_bottom_ref { get; set; }
+        public string transponder_mandatory_code { get; set; }
         public System.Data.Entity.Spatial.DbGeometry geometry { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ActiveDay> tbl_ActiveDays { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ActivePeriod> tbl_ActivePeriods { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ATCStation> tbl_ATCStations { get; set; }
     }
 }

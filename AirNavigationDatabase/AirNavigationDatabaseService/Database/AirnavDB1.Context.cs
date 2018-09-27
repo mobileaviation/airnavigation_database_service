@@ -13,10 +13,10 @@ namespace AirNavigationDatabaseService.Database
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class airnavdbEntities : DbContext
+    public partial class airnavdb_2Entities : DbContext
     {
-        public airnavdbEntities()
-            : base("name=airnavdbEntities")
+        public airnavdb_2Entities()
+            : base("name=airnavdb_2Entities")
         {
         }
     
@@ -25,16 +25,19 @@ namespace AirNavigationDatabaseService.Database
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<ActiveDay> tbl_ActiveDays { get; set; }
+        public virtual DbSet<ActivePeriod> tbl_ActivePeriods { get; set; }
+        public virtual DbSet<Airport> tbl_Airports { get; set; }
+        public virtual DbSet<Airspace> tbl_Airspaces { get; set; }
+        public virtual DbSet<ATCStation> tbl_ATCStations { get; set; }
         public virtual DbSet<Country> tbl_Countries { get; set; }
         public virtual DbSet<Fir> tbl_Firs { get; set; }
         public virtual DbSet<Fix> tbl_Fixes { get; set; }
+        public virtual DbSet<Frequency> tbl_Frequencies { get; set; }
+        public virtual DbSet<Link> tbl_Links { get; set; }
         public virtual DbSet<Navaid> tbl_Navaids { get; set; }
         public virtual DbSet<Region> tbl_Regions { get; set; }
-        public virtual DbSet<Tile> tbl_Tiles { get; set; }
-        public virtual DbSet<Airspace> tbl_Airspaces { get; set; }
-        public virtual DbSet<Link> tbl_Links1 { get; set; }
-        public virtual DbSet<Airport> tbl_Airports { get; set; }
-        public virtual DbSet<Frequency> tbl_Frequencies { get; set; }
         public virtual DbSet<Runway> tbl_Runways { get; set; }
+        public virtual DbSet<Tile> tbl_Tiles { get; set; }
     }
 }

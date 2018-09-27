@@ -15,11 +15,11 @@ namespace AirNavigationDatabaseService.Services
 
             country_mapper = new Mapper(country_mapper_cfg);
 
-            db = new Database.airnavdbEntities();
+            db = new Database.airnavdb_2Entities();
         }
 
         private IMapper country_mapper;
-        private Database.airnavdbEntities db;
+        private Database.airnavdb_2Entities db;
 
         public List<Country> GetCountriesByLimit(int start, int count)
         {

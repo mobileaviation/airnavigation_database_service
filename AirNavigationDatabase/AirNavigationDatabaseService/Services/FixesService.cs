@@ -15,11 +15,11 @@ namespace AirNavigationDatabaseService.Services
 
             fix_mapper = new Mapper(fix_mapper_cfg);
 
-            db = new Database.airnavdbEntities();
+            db = new Database.airnavdb_2Entities();
         }
 
         private IMapper fix_mapper;
-        private Database.airnavdbEntities db;
+        private Database.airnavdb_2Entities db;
 
         public List<Fix> GetFixesByLimit(int start, int count)
         {

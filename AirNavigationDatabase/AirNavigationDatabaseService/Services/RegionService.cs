@@ -15,11 +15,11 @@ namespace AirNavigationDatabaseService.Services
 
             region_mapper = new Mapper(region_mapper_cfg);
 
-            db = new Database.airnavdbEntities();
+            db = new Database.airnavdb_2Entities();
         }
 
         private IMapper region_mapper;
-        private Database.airnavdbEntities db;
+        private Database.airnavdb_2Entities db;
 
         public List<Region> GetRegionsByLimit(int start, int count)
         {

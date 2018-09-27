@@ -15,11 +15,11 @@ namespace AirNavigationDatabaseService.Services
 
             navaid_mapper = new Mapper(navaid_mapper_cfg);
 
-            db = new Database.airnavdbEntities();
+            db = new Database.airnavdb_2Entities();
         }
 
         private IMapper navaid_mapper;
-        private Database.airnavdbEntities db;
+        private Database.airnavdb_2Entities db;
 
         public List<Navaid> GetNavaidsByLimit(int start, int count)
         {

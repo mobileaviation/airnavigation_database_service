@@ -15,11 +15,11 @@ namespace AirNavigationDatabaseService.Services
 
             tile_mapper = new Mapper(tile_mapper_cfg);
 
-            db = new Database.airnavdbEntities();
+            db = new Database.airnavdb_2Entities();
         }
 
         private IMapper tile_mapper;
-        private Database.airnavdbEntities db;
+        private Database.airnavdb_2Entities db;
 
         public List<Tile> GetTilesByLimit(int start, int count)
         {
