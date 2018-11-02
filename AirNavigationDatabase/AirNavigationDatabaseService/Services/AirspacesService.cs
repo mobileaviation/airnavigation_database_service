@@ -30,6 +30,8 @@ namespace AirNavigationDatabaseService.Services
             var airspaces = (from l in db.tbl_Airspaces
                              select l).OrderBy(a => a.airspace_id).Skip(start).Take(count).ToList();
 
+            
+
             return airspace_mapper.Map<List<Database.Airspace>, List<Airspace>>(airspaces);
         }
 

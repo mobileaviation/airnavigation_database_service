@@ -97,12 +97,12 @@
   <ItemGroup>
     <Content Include="Database\AirnavDB1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>AirnavDB.edmx</DependentUpon>
+      <DependentUpon>AirnavDB1.edmx</DependentUpon>
       <LastGenOutput>AirnavDB1.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Database\AirnavDB1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>AirnavDB.edmx</DependentUpon>
+      <DependentUpon>AirnavDB1.edmx</DependentUpon>
       <LastGenOutput>AirnavDB1.cs</LastGenOutput>
     </Content>
     <Content Include="Global.asax" />
@@ -112,6 +112,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AirportsController.cs" />
     <Compile Include="Controllers\AirspacesController.cs" />
+    <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\FirController.cs" />
     <Compile Include="Controllers\FixController.cs" />
@@ -136,10 +137,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AirnavDB1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\AirnavDB.Designer.cs">
+    <Compile Include="Database\AirnavDB1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AirnavDB.edmx</DependentUpon>
+      <DependentUpon>AirnavDB1.edmx</DependentUpon>
     </Compile>
     <Compile Include="Database\Airport.cs">
       <DependentUpon>AirnavDB1.tt</DependentUpon>
@@ -148,6 +149,9 @@
       <DependentUpon>AirnavDB1.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\ATCStation.cs">
+      <DependentUpon>AirnavDB1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\City.cs">
       <DependentUpon>AirnavDB1.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Country.cs">
@@ -185,6 +189,7 @@
     <Compile Include="Models\Airport.cs" />
     <Compile Include="Models\Airspace.cs" />
     <Compile Include="Models\ATCStation.cs" />
+    <Compile Include="Models\City.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\EmpModel.cs" />
     <Compile Include="Models\Fir.cs" />
@@ -198,6 +203,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AirportService.cs" />
     <Compile Include="Services\AirspacesService.cs" />
+    <Compile Include="Services\CitiesService.cs" />
     <Compile Include="Services\CountryService.cs" />
     <Compile Include="Services\FirService.cs" />
     <Compile Include="Services\FixesService.cs" />
@@ -207,12 +213,12 @@
     <Compile Include="Services\TileService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Database\AirnavDB.edmx">
+    <EntityDeploy Include="Database\AirnavDB1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>AirnavDB.Designer.cs</LastGenOutput>
+      <LastGenOutput>AirnavDB1.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Database\AirnavDB.edmx.diagram">
-      <DependentUpon>AirnavDB.edmx</DependentUpon>
+    <Content Include="Database\AirnavDB1.edmx.diagram">
+      <DependentUpon>AirnavDB1.edmx</DependentUpon>
     </Content>
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\ToWebserver.pubxml" />

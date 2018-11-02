@@ -13,7 +13,7 @@ namespace AirNavigationDatabaseService.Database
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class airnavdb_2Entities : DbContext
+    internal partial class airnavdb_2Entities : DbContext
     {
         public airnavdb_2Entities()
             : base("name=airnavdb_2Entities")
@@ -39,5 +39,6 @@ namespace AirNavigationDatabaseService.Database
         public virtual DbSet<Region> tbl_Regions { get; set; }
         public virtual DbSet<Runway> tbl_Runways { get; set; }
         public virtual DbSet<Tile> tbl_Tiles { get; set; }
+        public virtual DbSet<City> tbl_Cities { get; set; }
     }
 }

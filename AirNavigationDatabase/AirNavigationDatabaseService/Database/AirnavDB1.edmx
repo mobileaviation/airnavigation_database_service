@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="AirnavDB2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="AirnavDB2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tbl_ActiveDays">
           <Key>
             <PropertyRef Name="id" />
@@ -76,6 +76,30 @@
           <Property Name="frequency" Type="nvarchar(max)" />
           <Property Name="stationname" Type="nvarchar(max)" />
           <Property Name="EFAirspace_id" Type="bigint" />
+        </EntityType>
+        <EntityType Name="tbl_Cities">
+          <Key>
+            <PropertyRef Name="geonameid" />
+          </Key>
+          <Property Name="geonameid" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="200" />
+          <Property Name="asciiname" Type="nvarchar(max)" />
+          <Property Name="alternatenames" Type="nvarchar(max)" />
+          <Property Name="latitude" Type="float" Nullable="false" />
+          <Property Name="longitude" Type="float" Nullable="false" />
+          <Property Name="feature_class" Type="nvarchar(max)" />
+          <Property Name="feature_code" Type="nvarchar(max)" />
+          <Property Name="country_code" Type="nvarchar" MaxLength="10" />
+          <Property Name="cc2" Type="nvarchar(max)" />
+          <Property Name="admin1_code" Type="nvarchar(max)" />
+          <Property Name="admin2_code" Type="nvarchar(max)" />
+          <Property Name="admin3_code" Type="nvarchar(max)" />
+          <Property Name="admin4_code" Type="nvarchar(max)" />
+          <Property Name="population" Type="int" Nullable="false" />
+          <Property Name="elevation" Type="int" Nullable="false" />
+          <Property Name="dem" Type="nvarchar(max)" />
+          <Property Name="timezone" Type="nvarchar(max)" />
+          <Property Name="modification_date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="tbl_Countries">
           <Key>
@@ -284,6 +308,7 @@
           <EntitySet Name="tbl_Airports" EntityType="Self.tbl_Airports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Airspaces" EntityType="Self.tbl_Airspaces" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_ATCStations" EntityType="Self.tbl_ATCStations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Cities" EntityType="Self.tbl_Cities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Countries" EntityType="Self.tbl_Countries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Firs" EntityType="Self.tbl_Firs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Fixes" EntityType="Self.tbl_Fixes" Schema="dbo" store:Type="Tables" />
@@ -314,8 +339,7 @@
             <End Role="tbl_Runways" EntitySet="tbl_Runways" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AirnavDB" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -637,7 +661,32 @@
             <End Role="tbl_Airspaces" EntitySet="tbl_Airspaces" />
             <End Role="tbl_ATCStations" EntitySet="tbl_ATCStations" />
           </AssociationSet>
+          <EntitySet Name="tbl_Cities" EntityType="AirnavDB.City" />
         </EntityContainer>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="geonameid" />
+          </Key>
+          <Property Name="geonameid" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="asciiname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="alternatenames" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="latitude" Type="Double" Nullable="false" />
+          <Property Name="longitude" Type="Double" Nullable="false" />
+          <Property Name="feature_class" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="feature_code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="country_code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="cc2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="admin1_code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="admin2_code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="admin3_code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="admin4_code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="population" Type="Int32" Nullable="false" />
+          <Property Name="elevation" Type="Int32" Nullable="false" />
+          <Property Name="dem" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="timezone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="modification_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -864,6 +913,31 @@
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="startValidity" ColumnName="startValidity" />
                 <ScalarProperty Name="endValidity" ColumnName="endValidity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Cities">
+            <EntityTypeMapping TypeName="AirnavDB.City">
+              <MappingFragment StoreEntitySet="tbl_Cities">
+                <ScalarProperty Name="modification_date" ColumnName="modification_date" />
+                <ScalarProperty Name="timezone" ColumnName="timezone" />
+                <ScalarProperty Name="dem" ColumnName="dem" />
+                <ScalarProperty Name="elevation" ColumnName="elevation" />
+                <ScalarProperty Name="population" ColumnName="population" />
+                <ScalarProperty Name="admin4_code" ColumnName="admin4_code" />
+                <ScalarProperty Name="admin3_code" ColumnName="admin3_code" />
+                <ScalarProperty Name="admin2_code" ColumnName="admin2_code" />
+                <ScalarProperty Name="admin1_code" ColumnName="admin1_code" />
+                <ScalarProperty Name="cc2" ColumnName="cc2" />
+                <ScalarProperty Name="country_code" ColumnName="country_code" />
+                <ScalarProperty Name="feature_code" ColumnName="feature_code" />
+                <ScalarProperty Name="feature_class" ColumnName="feature_class" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="alternatenames" ColumnName="alternatenames" />
+                <ScalarProperty Name="asciiname" ColumnName="asciiname" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="geonameid" ColumnName="geonameid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
