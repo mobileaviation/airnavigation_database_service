@@ -16,6 +16,7 @@ namespace AirNavigationDatabaseService.Models
         public long NavaidsCount;
         public long PropertiesCount;
         public long RegionsCount;
+        public long CitiesCount;
         public long Version;
     }
 }
