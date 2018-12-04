@@ -20,5 +20,14 @@ namespace AirNavigationDatabaseService.Controllers
             List<Fix> fixes = fixesService.GetFixesByLimit(start, count);
             return Request.CreateResponse(HttpStatusCode.OK, fixes);
         }
+
+        [Route("Fixes/limit/{continent}/{start}/{count}")]
+        [HttpGet]
+        public HttpResponseMessage GetFixesByLimitsAndContinent(int start, int count, String continent)
+        {
+            FixesService fixesService = new FixesService();
+            List<Fix> fixes = fixesService.GetFixesByLimitAndContinent(start, count, continent);
+            return Request.CreateResponse(HttpStatusCode.OK, fixes);
+        }
     }
 }

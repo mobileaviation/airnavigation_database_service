@@ -35,6 +35,17 @@ namespace AirNavigationDatabaseService.Services
             return airspace_mapper.Map<List<Database.Airspace>, List<Airspace>>(airspaces);
         }
 
+        public List<Airspace> GetAirspacesByLimitAndContinent(int start, int count, String continent)
+        {
+            var airspaces = (from l in db.tbl_Airspaces
+                             where l.continent.Equals(continent)
+                             select l).OrderBy(a => a.airspace_id).Skip(start).Take(count).ToList();
+
+
+
+            return airspace_mapper.Map<List<Database.Airspace>, List<Airspace>>(airspaces);
+        }
+
         public List<Airspace> GetAirspacesByCountry(String country)
         {
             var airspaces = (from l in db.tbl_Airspaces

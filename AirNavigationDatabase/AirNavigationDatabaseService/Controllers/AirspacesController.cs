@@ -21,6 +21,15 @@ namespace AirNavigationDatabaseService.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, airspaces);
         }
 
+        [Route("airspaces/limit/{continent}/{start}/{count}")]
+        [HttpGet]
+        public HttpResponseMessage GetAirspacesByLimitsAndContinent(int start, int count, String continent)
+        {
+            AirspacesService airspacesService = new AirspacesService();
+            List<Airspace> airspaces = airspacesService.GetAirspacesByLimitAndContinent(start, count, continent);
+            return Request.CreateResponse(HttpStatusCode.OK, airspaces);
+        }
+
         [Route("airspaces/country/{country}")]
         [HttpGet]
         public HttpResponseMessage GetAirspacesByCountry(String country)

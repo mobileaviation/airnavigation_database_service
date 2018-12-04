@@ -36,6 +36,7 @@ namespace AirNavigationDatabaseService.Database
         public string altLimit_bottom_ref { get; set; }
         public string transponder_mandatory_code { get; set; }
         public System.Data.Entity.Spatial.DbGeometry geometry { get; set; }
+        public string continent { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ActiveDay> tbl_ActiveDays { get; set; }

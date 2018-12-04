@@ -29,5 +29,14 @@ namespace AirNavigationDatabaseService.Controllers
             List<City> cities = citiesService.getCitiesByLimit(start, count);
             return Request.CreateResponse(HttpStatusCode.OK, cities);
         }
+
+        [Route("cities/limit/{continent}/{start}/{count}")]
+        [HttpGet]
+        public HttpResponseMessage getCitiesByLimitAndContinent(int start, int count, String continent)
+        {
+            CitiesService citiesService = new CitiesService();
+            List<City> cities = citiesService.getCitiesByLimitAndContinent(start, count, continent);
+            return Request.CreateResponse(HttpStatusCode.OK, cities);
+        }
     }
 }

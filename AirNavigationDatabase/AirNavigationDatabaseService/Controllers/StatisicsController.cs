@@ -22,5 +22,16 @@ namespace AirNavigationDatabaseService.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, statistics);
         }
+
+        [Route("Statistics/{continent}")]
+        [HttpGet]
+        public HttpResponseMessage GetCountsByContinents(String continent)
+        {
+            StatistcsService statistcsService = new StatistcsService();
+            Statistics statistics = statistcsService.GetStatisticsByContinent(continent);
+
+
+            return Request.CreateResponse(HttpStatusCode.OK, statistics);
+        }
     }
 }

@@ -28,5 +28,14 @@ namespace AirNavigationDatabaseService.Services
 
             return fix_mapper.Map<List<Database.Fix>, List<Fix>>(fixes);
         }
+
+        public List<Fix> GetFixesByLimitAndContinent(int start, int count, String continent)
+        {
+            var fixes = (from l in db.tbl_Fixes
+                         where l.continent.Equals(continent)
+                         select l).OrderBy(a => a.C_id).Skip(start).Take(count).ToList();
+
+            return fix_mapper.Map<List<Database.Fix>, List<Fix>>(fixes);
+        }
     }
 }

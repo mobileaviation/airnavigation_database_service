@@ -36,5 +36,14 @@ namespace AirNavigationDatabaseService.Services
 
             return cities_mapper.Map<List<Database.City>, List<City>>(cities);
         }
+
+        public List<City> getCitiesByLimitAndContinent(int start, int count, String continent)
+        {
+            var cities = (from l in db.tbl_Cities
+                          where l.continent.Equals(continent)
+                          select l).OrderBy(a => a.geonameid).Skip(start).Take(count).ToList();
+
+            return cities_mapper.Map<List<Database.City>, List<City>>(cities);
+        }
     }
 }

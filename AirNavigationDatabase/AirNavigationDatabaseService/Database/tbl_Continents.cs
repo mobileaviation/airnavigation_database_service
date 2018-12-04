@@ -12,12 +12,12 @@ namespace AirNavigationDatabaseService.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class Fix
+    public partial class tbl_Continents
     {
-        public int C_id { get; set; }
-        public string ident { get; set; }
-        public double latitude_deg { get; set; }
-        public double longitude_deg { get; set; }
-        public string continent { get; set; }
+        public long id { get; set; }
+        public string name { get; set; }
+        public string code { get; set; }
+        public System.Data.Entity.Spatial.DbGeometry geometry { get; set; }
+        public System.Data.Entity.Spatial.DbGeometry envelope { get; set; }
     }
 }

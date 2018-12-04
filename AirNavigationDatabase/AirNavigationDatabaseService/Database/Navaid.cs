@@ -36,5 +36,6 @@ namespace AirNavigationDatabaseService.Database
         public string power { get; set; }
         public string associated_airport { get; set; }
         public int associated_airport_id { get; set; }
+        public string continent { get; set; }
     }
 }

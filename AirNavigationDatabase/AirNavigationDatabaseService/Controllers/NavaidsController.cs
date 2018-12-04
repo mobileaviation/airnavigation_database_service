@@ -20,5 +20,14 @@ namespace AirNavigationDatabaseService.Controllers
             List<Navaid> navaids = navaidsService.GetNavaidsByLimit(start, count);
             return Request.CreateResponse(HttpStatusCode.OK, navaids);
         }
+
+        [Route("Navaids/limit/{continent}/{start}/{count}")]
+        [HttpGet]
+        public HttpResponseMessage GetAirportsByLimitsAndContinent(int start, int count, String continent)
+        {
+            NavaidsService navaidsService = new NavaidsService();
+            List<Navaid> navaids = navaidsService.GetNavaidsByLimitAndContinents(start, count, continent);
+            return Request.CreateResponse(HttpStatusCode.OK, navaids);
+        }
     }
 }

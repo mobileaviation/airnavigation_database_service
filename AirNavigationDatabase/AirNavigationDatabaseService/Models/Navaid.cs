@@ -18,6 +18,7 @@ namespace AirNavigationDatabaseService.Models
         public Double longitude_deg;
         public Int32 elevation_ft;
         public String iso_country;
+        public String continent;
         public Double dme_frequency_khz;
         public Double dme_channel;
         public Double dme_latitude_deg;

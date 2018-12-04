@@ -52,5 +52,14 @@ namespace AirNavigationDatabaseService.Services
             return airport_mapper.Map<List<Database.Airport>, List<Airport>>(airports);
         }
 
+        public List<Airport> GetAirportsByLimitAndContinent(int start, int count, String continent)
+        {
+            var airports = (from l in db.tbl_Airports
+                            where l.continent.Equals(continent)
+                            select l).OrderBy(a => a.id).Skip(start).Take(count).ToList();
+
+            return airport_mapper.Map<List<Database.Airport>, List<Airport>>(airports);
+        }
+
     }
 }

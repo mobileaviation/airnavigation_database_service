@@ -178,6 +178,9 @@
     <Compile Include="Database\Runway.cs">
       <DependentUpon>AirnavDB1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\tbl_Continents.cs">
+      <DependentUpon>AirnavDB1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\Tile.cs">
       <DependentUpon>AirnavDB1.tt</DependentUpon>
     </Compile>

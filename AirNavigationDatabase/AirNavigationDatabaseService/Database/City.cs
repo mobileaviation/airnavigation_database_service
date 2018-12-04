@@ -33,5 +33,6 @@ namespace AirNavigationDatabaseService.Database
         public string dem { get; set; }
         public string timezone { get; set; }
         public System.DateTime modification_date { get; set; }
+        public string continent { get; set; }
     }
 }

@@ -29,5 +29,14 @@ namespace AirNavigationDatabaseService.Controllers
             List<Airport> airports = airportService.GetAirportsByLimit(start, count);
             return Request.CreateResponse(HttpStatusCode.OK, airports);
         }
+
+        [Route("airports/limit/{continent}/{start}/{count}")]
+        [HttpGet]
+        public HttpResponseMessage GetAirportsByLimitsAndContinent(int start, int count, String continent)
+        {
+            AirportService airportService = new AirportService();
+            List<Airport> airports = airportService.GetAirportsByLimitAndContinent(start, count, continent);
+            return Request.CreateResponse(HttpStatusCode.OK, airports);
+        }
     }
 }

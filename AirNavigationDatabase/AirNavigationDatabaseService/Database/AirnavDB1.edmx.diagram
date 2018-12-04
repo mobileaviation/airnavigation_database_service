@@ -15,16 +15,17 @@
         <EntityTypeShape EntityType="AirnavDB.Fix" Width="1.5" PointX="10.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AirnavDB.Frequency" Width="1.5" PointX="8" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="AirnavDB.Link" Width="1.5" PointX="4.75" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AirnavDB.Navaid" Width="1.5" PointX="10.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AirnavDB.Navaid" Width="2" PointX="10.5" PointY="6.125" IsExpanded="true" />
         <EntityTypeShape EntityType="AirnavDB.Region" Width="1.5" PointX="6.75" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AirnavDB.Runway" Width="1.5" PointX="8" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AirnavDB.Runway" Width="1.5" PointX="8" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="AirnavDB.Tile" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="AirnavDB.FK_dbo_tbl_ActiveDays_dbo_tbl_Airspaces_EFAirspace_id" ManuallyRouted="false" />
         <AssociationConnector Association="AirnavDB.FK_dbo_tbl_ActivePeriods_dbo_tbl_Airspaces_EFAirspace_id" ManuallyRouted="false" />
         <AssociationConnector Association="AirnavDB.FK_dbo_tbl_Frequencies_dbo_tbl_Airports_airport_ref" ManuallyRouted="false" />
         <AssociationConnector Association="AirnavDB.FK_dbo_tbl_Runways_dbo_tbl_Airports_airport_ref" ManuallyRouted="false" />
         <AssociationConnector Association="AirnavDB.FK_dbo_tbl_ATCStations_dbo_tbl_Airspaces_EFAirspace_id" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="AirnavDB.City" Width="1.5" PointX="8.75" PointY="10.625" />
+        <EntityTypeShape EntityType="AirnavDB.City" Width="1.5" PointX="8.75" PointY="10.875" />
+        <EntityTypeShape EntityType="AirnavDB.tbl_Continents" Width="1.5" PointX="10.25" PointY="1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

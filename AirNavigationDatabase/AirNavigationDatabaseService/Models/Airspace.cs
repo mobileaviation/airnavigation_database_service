@@ -20,6 +20,7 @@ namespace AirNavigationDatabaseService.Models
         public string category;
         public long airspace_id;
         public string country;
+        public string continent;
         public long altLimit_top;
         public string altLimit_top_unit;
         public string altLimit_top_ref;

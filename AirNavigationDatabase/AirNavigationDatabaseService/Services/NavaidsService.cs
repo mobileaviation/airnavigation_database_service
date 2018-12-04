@@ -28,5 +28,14 @@ namespace AirNavigationDatabaseService.Services
 
             return navaid_mapper.Map<List<Database.Navaid>, List<Navaid>>(navaids);
         }
+
+        public List<Navaid> GetNavaidsByLimitAndContinents(int start, int count, String continent)
+        {
+            var navaids = (from l in db.tbl_Navaids
+                           where l.continent.Equals(continent)
+                           select l).OrderBy(a => a.C_id).Skip(start).Take(count).ToList();
+
+            return navaid_mapper.Map<List<Database.Navaid>, List<Navaid>>(navaids);
+        }
     }
 }

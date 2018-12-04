@@ -59,6 +59,7 @@
           <Property Name="category" Type="nvarchar(max)" />
           <Property Name="airspace_id" Type="bigint" Nullable="false" />
           <Property Name="country" Type="nvarchar(max)" />
+          <Property Name="continent" Type="nvarchar" MaxLength="10" />
           <Property Name="altLimit_top" Type="bigint" Nullable="false" />
           <Property Name="altLimit_top_unit" Type="nvarchar(max)" />
           <Property Name="altLimit_top_ref" Type="nvarchar(max)" />
@@ -90,6 +91,7 @@
           <Property Name="feature_class" Type="nvarchar(max)" />
           <Property Name="feature_code" Type="nvarchar(max)" />
           <Property Name="country_code" Type="nvarchar" MaxLength="10" />
+          <Property Name="continent" Type="nvarchar" MaxLength="50" />
           <Property Name="cc2" Type="nvarchar(max)" />
           <Property Name="admin1_code" Type="nvarchar(max)" />
           <Property Name="admin2_code" Type="nvarchar(max)" />
@@ -100,6 +102,16 @@
           <Property Name="dem" Type="nvarchar(max)" />
           <Property Name="timezone" Type="nvarchar(max)" />
           <Property Name="modification_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_Continents">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="geometry" Type="geometry" Nullable="false" />
+          <Property Name="envelope" Type="geometry" Nullable="false" />
         </EntityType>
         <EntityType Name="tbl_Countries">
           <Key>
@@ -132,6 +144,7 @@
           <Property Name="ident" Type="nvarchar" MaxLength="10" />
           <Property Name="latitude_deg" Type="float" Nullable="false" />
           <Property Name="longitude_deg" Type="float" Nullable="false" />
+          <Property Name="continent" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tbl_Frequencies">
           <Key>
@@ -173,6 +186,7 @@
           <Property Name="longitude_deg" Type="float" Nullable="false" />
           <Property Name="elevation_ft" Type="int" Nullable="false" />
           <Property Name="iso_country" Type="nvarchar(max)" />
+          <Property Name="continent" Type="nvarchar" MaxLength="10" />
           <Property Name="dme_frequency_khz" Type="float" Nullable="false" />
           <Property Name="dme_channel" Type="float" Nullable="false" />
           <Property Name="dme_latitude_deg" Type="float" Nullable="false" />
@@ -309,6 +323,7 @@
           <EntitySet Name="tbl_Airspaces" EntityType="Self.tbl_Airspaces" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_ATCStations" EntityType="Self.tbl_ATCStations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Cities" EntityType="Self.tbl_Cities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Continents" EntityType="Self.tbl_Continents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Countries" EntityType="Self.tbl_Countries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Firs" EntityType="Self.tbl_Firs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Fixes" EntityType="Self.tbl_Fixes" Schema="dbo" store:Type="Tables" />
@@ -412,6 +427,7 @@
           <NavigationProperty Name="tbl_ActiveDays" Relationship="Self.FK_dbo_tbl_ActiveDays_dbo_tbl_Airspaces_EFAirspace_id" FromRole="tbl_Airspaces" ToRole="tbl_ActiveDays" />
           <NavigationProperty Name="tbl_ActivePeriods" Relationship="Self.FK_dbo_tbl_ActivePeriods_dbo_tbl_Airspaces_EFAirspace_id" FromRole="tbl_Airspaces" ToRole="tbl_ActivePeriods" />
           <NavigationProperty Name="tbl_ATCStations" Relationship="Self.FK_dbo_tbl_ATCStations_dbo_tbl_Airspaces_EFAirspace_id" FromRole="tbl_Airspaces" ToRole="tbl_ATCStations" />
+          <Property Name="continent" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ATCStation">
           <Key>
@@ -454,6 +470,7 @@
           <Property Name="ident" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="latitude_deg" Type="Double" Nullable="false" />
           <Property Name="longitude_deg" Type="Double" Nullable="false" />
+          <Property Name="continent" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Frequency">
           <Key>
@@ -507,6 +524,7 @@
           <Property Name="power" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="associated_airport" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="associated_airport_id" Type="Int32" Nullable="false" />
+          <Property Name="continent" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Region">
           <Key>
@@ -662,6 +680,7 @@
             <End Role="tbl_ATCStations" EntitySet="tbl_ATCStations" />
           </AssociationSet>
           <EntitySet Name="tbl_Cities" EntityType="AirnavDB.City" />
+          <EntitySet Name="tbl_Continents" EntityType="AirnavDB.tbl_Continents" />
         </EntityContainer>
         <EntityType Name="City">
           <Key>
@@ -686,6 +705,17 @@
           <Property Name="dem" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="timezone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="modification_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="continent" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_Continents">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="code" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="geometry" Type="Geometry" Nullable="false" />
+          <Property Name="envelope" Type="Geometry" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -743,6 +773,7 @@
           <EntitySetMapping Name="tbl_Airspaces">
             <EntityTypeMapping TypeName="AirnavDB.Airspace">
               <MappingFragment StoreEntitySet="tbl_Airspaces">
+                <ScalarProperty Name="continent" ColumnName="continent" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="version" ColumnName="version" />
@@ -798,6 +829,7 @@
           <EntitySetMapping Name="tbl_Fixes">
             <EntityTypeMapping TypeName="AirnavDB.Fix">
               <MappingFragment StoreEntitySet="tbl_Fixes">
+                <ScalarProperty Name="continent" ColumnName="continent" />
                 <ScalarProperty Name="C_id" ColumnName="_id" />
                 <ScalarProperty Name="ident" ColumnName="ident" />
                 <ScalarProperty Name="latitude_deg" ColumnName="latitude_deg" />
@@ -835,6 +867,7 @@
           <EntitySetMapping Name="tbl_Navaids">
             <EntityTypeMapping TypeName="AirnavDB.Navaid">
               <MappingFragment StoreEntitySet="tbl_Navaids">
+                <ScalarProperty Name="continent" ColumnName="continent" />
                 <ScalarProperty Name="C_id" ColumnName="_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="filename" ColumnName="filename" />
@@ -919,6 +952,7 @@
           <EntitySetMapping Name="tbl_Cities">
             <EntityTypeMapping TypeName="AirnavDB.City">
               <MappingFragment StoreEntitySet="tbl_Cities">
+                <ScalarProperty Name="continent" ColumnName="continent" />
                 <ScalarProperty Name="modification_date" ColumnName="modification_date" />
                 <ScalarProperty Name="timezone" ColumnName="timezone" />
                 <ScalarProperty Name="dem" ColumnName="dem" />
@@ -938,6 +972,17 @@
                 <ScalarProperty Name="asciiname" ColumnName="asciiname" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="geonameid" ColumnName="geonameid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Continents">
+            <EntityTypeMapping TypeName="AirnavDB.tbl_Continents">
+              <MappingFragment StoreEntitySet="tbl_Continents">
+                <ScalarProperty Name="envelope" ColumnName="envelope" />
+                <ScalarProperty Name="geometry" ColumnName="geometry" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

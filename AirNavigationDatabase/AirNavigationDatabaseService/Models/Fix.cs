@@ -11,5 +11,6 @@ namespace AirNavigationDatabaseService.Models
         public String ident;
         public Double latitude_deg;
         public Double longitude_deg;
+        public String continent;
     }
 }
